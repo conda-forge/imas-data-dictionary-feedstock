@@ -5,7 +5,6 @@ idsinfo --help
 
 # Confirm required environment variables are set
 echo "IMAS_VERSION: ${IMAS_VERSION}"
-echo "IMAS_PREFIX: ${IMAS_PREFIX}"
 
 # Confirm if the environment variables are set correctly
 if [[ "${IMAS_VERSION}" == "${PKG_VERSION}" ]]; then
@@ -14,9 +13,9 @@ else
     echo "IMAS_VERSION is not set correctly"
     exit 1
 fi
-if [[ "${IMAS_PREFIX}/include/IDSDef.xml" == "$(idsinfo idspath)" ]]; then
-    echo "IMAS_PREFIX is set correctly"
+if [[ -f "$(idsinfo idspath)" ]]; then
+    echo "idsinfo idspath points to an existing Data Dictionary file"
 else
-    echo "IMAS_PREFIX is not set correctly"
+    echo "idsinfo idspath does not point to an existing file"
     exit 1
 fi

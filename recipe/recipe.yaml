@@ -1,5 +1,5 @@
 context:
-  version: "4.0.0.post1"
+  version: "4.1.1"
   name: "imas-data-dictionary"
 
 package:
@@ -8,9 +8,8 @@ package:
 
 source:
   url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name | split("-") | join("_") }}-${{ version }}.tar.gz
-  sha256: 3ad8978e944de0b87bd8d2aa64fbe6c640ce976183196858d17101647f6e4d9f
+  sha256: a184970b8bd87885861de3096a5c63b7f35dfd6e1d212b4bd9090e54897386dc
   patches:
-    - remove_setuptools_scm.patch
     # Use Saxon-HE (Java) instead of the PyPI-only saxonche for the XSLT
     # transformations performed at build time
     - use_saxon_he.patch
@@ -20,11 +19,8 @@ build:
   noarch: python
   python:
     entry_points:
-      - idsinfo = data_dictionary.idsinfo:main
-  files:
-    include: ["**"]
-    exclude:
-      - dd_${{ version }}/share/
+      - idsinfo = imas_data_dictionary.idsinfo:main
+      - dd_doc = imas_data_dictionary.dd_doc:main
 
 requirements:
   build:
@@ -46,7 +42,7 @@ requirements:
 tests:
   - python:
       imports:
-        - data_dictionary
+        - imas_data_dictionary
       python_version:
         - ${{ python_min }}.*
         - "*"
